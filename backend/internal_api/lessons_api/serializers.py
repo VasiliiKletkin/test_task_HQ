@@ -2,13 +2,13 @@ from lessons.models import Lesson, LessonInfo
 from rest_framework import serializers
 
 
-class LessonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lesson
-        fields = '__all__'
-
-
 class LessonInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LessonInfo
-        fields = '__all__'
+        fields = ['watched', 'lesson', 'user', 'is_watched']
+
+class LessonSerializer(serializers.ModelSerializer):
+    lessons_info = LessonInfoSerializer(many=True)
+    class Meta:
+        model = Lesson
+        fields = ['title', 'url', 'video_duration', 'lessons_info']
